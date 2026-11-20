@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Marketplace - Customer Login</title>
+    <!-- Linking external CSS file (Code Separation) -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-body">
+
+    <!-- Auth Container -->
+    <div class="auth-container">
+        
+        <!-- Brand Header -->
+        <div class="auth-header">
+            <div class="auth-logo">🛒 Online Marketplace</div>
+            <p class="auth-subtitle">Customer Portal Sign In</p>
+        </div>
+
+        <!-- Login Card -->
+        <div class="card auth-card">
+            <h2>Welcome Back!</h2>
+            <p class="auth-instruction">Please enter your credentials to access your customer dashboard.</p>
+
+            <!-- Success / Status Alert Box -->
+            <div id="loginAlert" class="alert-box success-alert" style="display: none;"></div>
+
+            <!-- Login Form -->
+            <form id="loginForm" novalidate>
+
+                <!-- Email Input -->
+                <div class="form-group">
+                    <label for="loginEmail">Email Address: <span class="required">*</span></label>
+                    <input type="email" id="loginEmail" class="form-input" placeholder="e.g. mehedi@example.com">
+                    <span id="loginEmailErr" class="error-msg">Please enter a valid email address.</span>
+                </div>
+
+                <!-- Password Input with Show/Hide toggle -->
+                <div class="form-group">
+                    <label for="loginPassword">Password: <span class="required">*</span></label>
+                    <div class="password-wrapper">
+                        <input type="password" id="loginPassword" class="form-input" placeholder="Enter your password">
+                        <button type="button" class="btn-toggle-pw" onclick="togglePasswordVisibility('loginPassword', this)">Show</button>
+                    </div>
+                    <span id="loginPasswordErr" class="error-msg">Password must be at least 6 characters long.</span>
+                </div>
+
+                <!-- Remember Me & Forgot Password -->
+                <div class="auth-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="rememberMe"> Remember me
+                    </label>
+                    <a href="#" class="auth-link" onclick="handleForgotPassword(event)">Forgot Password?</a>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary btn-block">Log In to Customer Portal</button>
+            </form>
+
+            <!-- Switch to Signup Link -->
+            <div class="auth-footer">
+                <p>New to Online Marketplace? <a href="signup.html" class="auth-link-bold">Create a Customer Account</a></p>
+                <p class="demo-credential-hint">💡 Demo: You can test with <strong>mehedi.hasan@example.com</strong> and password <strong>pass123</strong></p>
+            </div>
+        </div>
+
+        <!-- Simple Footer -->
+        <footer class="auth-page-footer">
+            <p>© 2026 Online Marketplace E-Commerce Management System. Customer Portal.</p>
+        </footer>
+
+    </div>
+
+    <!-- Linking external JS file (Code Separation) -->
+    <script src="js/auth.js"></script>
+</body>
+</html>

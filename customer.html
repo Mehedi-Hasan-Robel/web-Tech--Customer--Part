@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Marketplace - Customer Dashboard</title>
+    <!-- Linking external CSS file (Code Separation) -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-area">
+                <h1>🛒 Online Marketplace</h1>
+                <span class="tagline">E-Commerce Management System</span>
+            </div>
+            <div class="user-info">
+                <span class="user-badge">Role: Customer</span>
+                <span class="user-name">Welcome, <strong id="navCustomerName">Mehedi Hasan</strong></span>
+                <a href="login.html" class="btn-logout" title="Sign out of customer portal">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Bar / Feature Switcher -->
+    <nav class="nav-bar">
+        <div class="nav-container">
+            <button class="nav-btn active" onclick="switchTab('profile-section', this)">👤 Profile & Address</button>
+            <button class="nav-btn" onclick="switchTab('reviews-section', this)">⭐ Product Reviews</button>
+            <button class="nav-btn" onclick="switchTab('wishlist-section', this)">❤️ Wishlist & Budget</button>
+            <button class="nav-btn" onclick="switchTab('support-section', this)">🎫 Support & Returns</button>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="main-container">
+
+        <!-- ==========================================
+             FEATURE 1: Customer Profile & Delivery Address
+             ========================================== -->
+        <section id="profile-section" class="feature-section active-section">
+            <div class="section-title">
+                <h2>Feature 1: Customer Profile & Delivery Address Manager</h2>
+                <p>Manage your personal account details and default delivery destination for orders.</p>
+            </div>
+
+            <div class="two-column-grid">
+                <!-- Current Profile Display Card (Updated via DOM) -->
+                <div class="card preview-card">
+                    <h3>Current Profile Information</h3>
+                    <div class="profile-avatar">
+                        <span class="avatar-icon">👤</span>
+                    </div>
+                    <div class="profile-details">
+                        <p><strong>Customer ID:</strong> <span id="dispCustomerId">CST-7842</span></p>
+                        <p><strong>Full Name:</strong> <span id="dispName">Mehedi Hasan</span></p>
+                        <p><strong>Email Address:</strong> <span id="dispEmail">mehedi.@example.com</span></p>
+                        <p><strong>Phone Number:</strong> <span id="dispPhone">01864967296</span></p>
+                        <p><strong>Delivery Address:</strong> <span id="dispAddress">House 248, Road 2, Bashundhara</span></p>
+                        <p><strong>City / Area:</strong> <span id="dispCity">Dhaka</span></p>
+                        <p><strong>Address Type:</strong> <span id="dispType" class="badge">Home</span></p>
+                    </div>
+                    <div class="profile-stats">
+                        <div class="stat-box">
+                            <span class="stat-number">14</span>
+                            <span class="stat-label">Orders Placed</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-number">4</span>
+                            <span class="stat-label">Saved Items</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Update Form with JS Validation -->
+                <div class="card form-card">
+                    <h3>Edit Profile & Delivery Address</h3>
+                    <div id="profileAlert" class="alert-box success-alert" style="display: none;">
+                        Profile updated successfully!
+                    </div>
+
+                    <form id="profileForm" novalidate>
+                        <!-- Full Name -->
+                        <div class="form-group">
+                            <label for="profName">Full Name: <span class="required">*</span></label>
+                            <input type="text" id="profName" class="form-input" placeholder="e.g. Mehedi Hasan" value="Mehedi Hasan">
+                            <span id="profNameErr" class="error-msg">Please enter a valid name (at least 3 letters, no numbers).</span>
+                        </div>
+
+                        <!-- Email Address -->
+                        <div class="form-group">
+                            <label for="profEmail">Email Address: <span class="required">*</span></label>
+                            <input type="email" id="profEmail" class="form-input" placeholder="e.g. mehedi@example.com" value="mehedi.hasan@example.com">
+                            <span id="profEmailErr" class="error-msg">Please enter a valid email address containing '@' and '.'</span>
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div class="form-group">
+                            <label for="profPhone">Contact Phone: <span class="required">*</span></label>
+                            <input type="text" id="profPhone" class="form-input" placeholder="e.g. 01864967296" value="01864967296">
+                            <span id="profPhoneErr" class="error-msg">Phone number must be exactly 11 digits and start with 01.</span>
+                        </div>
+
+                        <!-- Delivery Address -->
+                        <div class="form-group">
+                            <label for="profAddress">Delivery Street Address: <span class="required">*</span></label>
+                            <textarea id="profAddress" class="form-input" rows="3" placeholder="House, Road, Area details">House 248, Road 2, Bashundhara</textarea>
+                            <span id="profAddressErr" class="error-msg">Delivery address must be at least 10 characters long.</span>
+                        </div>
+
+                        <!-- City Dropdown -->
+                        <div class="form-group">
+                            <label for="profCity">City / Region: <span class="required">*</span></label>
+                            <select id="profCity" class="form-input">
+                                <option value="">-- Select Your City --</option>
+                                <option value="Dhaka" selected>Dhaka</option>
+                                <option value="Chittagong">Chittagong</option>
+                                <option value="Sylhet">Sylhet</option>
+                                <option value="Rajshahi">Rajshahi</option>
+                                <option value="Khulna">Khulna</option>
+                            </select>
+                            <span id="profCityErr" class="error-msg">Please select your city.</span>
+                        </div>
+
+                        <!-- Address Type Radio -->
+                        <div class="form-group">
+                            <label>Address Type:</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="addressType" value="Home" checked> Home</label>
+                                <label><input type="radio" name="addressType" value="Office"> Office</label>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             FEATURE 2: Product Review & Rating System
+             ========================================== -->
+        <section id="reviews-section" class="feature-section" style="display: none;">
+            <div class="section-title">
+                <h2>Feature 2: Product Review & Rating Feedback System</h2>
+                <p>Share your authentic product experience, rate purchased items, and help other shoppers.</p>
+            </div>
+
+            <div class="two-column-grid">
+                <!-- Review Form -->
+                <div class="card form-card">
+                    <h3>Write a Product Review</h3>
+                    <div id="reviewAlert" class="alert-box success-alert" style="display: none;">
+                        Your review has been published!
+                    </div>
+
+                    <form id="reviewForm" novalidate>
+                        <!-- Select Product -->
+                        <div class="form-group">
+                            <label for="revProduct">Select Purchased Product: <span class="required">*</span></label>
+                            <select id="revProduct" class="form-input">
+                                <option value="">-- Choose a Product --</option>
+                                <option value="Wireless Bluetooth Earbuds">Wireless Bluetooth Earbuds</option>
+                                <option value="Men's Cotton Casual T-Shirt">Men's Cotton Casual T-Shirt</option>
+                                <option value="Smart Fitness Tracker Watch">Smart Fitness Tracker Watch</option>
+                                <option value="Stainless Steel Thermal Flask">Stainless Steel Thermal Flask</option>
+                                <option value="Ergonomic Optical Gaming Mouse">Ergonomic Optical Gaming Mouse</option>
+                            </select>
+                            <span id="revProductErr" class="error-msg">Please select a product to review.</span>
+                        </div>
+
+                        <!-- Rating Dropdown -->
+                        <div class="form-group">
+                            <label for="revRating">Rating (Stars): <span class="required">*</span></label>
+                            <select id="revRating" class="form-input">
+                                <option value="">-- Choose Rating --</option>
+                                <option value="5">⭐⭐⭐⭐⭐ (5 Stars - Excellent)</option>
+                                <option value="4">⭐⭐⭐⭐ (4 Stars - Very Good)</option>
+                                <option value="3">⭐⭐⭐ (3 Stars - Average)</option>
+                                <option value="2">⭐⭐ (2 Stars - Poor)</option>
+                                <option value="1">⭐ (1 Star - Terrible)</option>
+                            </select>
+                            <span id="revRatingErr" class="error-msg">Please pick a star rating.</span>
+                        </div>
+
+                        <!-- Review Title -->
+                        <div class="form-group">
+                            <label for="revTitle">Review Headline / Title: <span class="required">*</span></label>
+                            <input type="text" id="revTitle" class="form-input" placeholder="e.g. Great sound quality for the price!">
+                            <span id="revTitleErr" class="error-msg">Title must be between 5 and 50 characters.</span>
+                        </div>
+
+                        <!-- Detailed Review -->
+                        <div class="form-group">
+                            <label for="revComment">Detailed Feedback: <span class="required">*</span></label>
+                            <textarea id="revComment" class="form-input" rows="4" placeholder="Tell us about the product quality, delivery, and battery life..."></textarea>
+                            <span id="revCommentErr" class="error-msg">Feedback must be at least 15 characters long.</span>
+                        </div>
+
+                        <!-- Recommendation Checkbox -->
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="revRecommend" checked>
+                                I recommend this product to other customers
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Post Customer Review</button>
+                    </form>
+                </div>
+
+                <!-- Recent Reviews Feed (DOM Appended) -->
+                <div class="card">
+                    <div class="feed-header">
+                        <h3>My Submitted Reviews</h3>
+                        <span id="reviewCountBadge" class="badge">1 Review</span>
+                    </div>
+
+                    <div id="reviewsList" class="reviews-container">
+                        <!-- Initial Demo Review -->
+                        <div class="review-card" id="demoReview1">
+                            <div class="review-header">
+                                <h4 class="rev-product-title">Wireless Bluetooth Earbuds</h4>
+                                <span class="rev-stars">⭐⭐⭐⭐⭐</span>
+                            </div>
+                            <h5 class="rev-headline">"Exceptional bass and quick delivery"</h5>
+                            <p class="rev-body">The sound quality is crisp and clear. Battery lasts for more than 7 hours continuously. Very pleased with EazyMart delivery service!</p>
+                            <div class="review-footer">
+                                <span class="rev-tag tag-rec">✓ Recommended</span>
+                                <span class="rev-date">Posted on: 18 Nov, 2026</span>
+                                <button type="button" class="btn-delete" onclick="removeReview('demoReview1')">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             FEATURE 3: Wishlist & Budget Calculator
+             ========================================== -->
+        <section id="wishlist-section" class="feature-section" style="display: none;">
+            <div class="section-title">
+                <h2>Feature 3: Customer Wishlist & Budget Calculator</h2>
+                <p>Plan your shopping list, estimate expenses, and apply discount promo codes before checkout.</p>
+            </div>
+
+            <!-- Add to Wishlist Bar -->
+            <div class="card form-card mb-20">
+                <h3>Add Item to Wishlist</h3>
+                <div id="wishlistAlert" class="alert-box success-alert" style="display: none;">
+                    Item added to wishlist!
+                </div>
+                <div class="wishlist-add-row">
+                    <div class="form-group flex-2">
+                        <label for="wishItemSelect">Choose Product: <span class="required">*</span></label>
+                        <select id="wishItemSelect" class="form-input">
+                            <option value="">-- Select Product to Save --</option>
+                            <option value="Wireless Earbuds|45">Wireless Bluetooth Earbuds ($45)</option>
+                            <option value="Casual Cotton T-Shirt|20">Casual Cotton T-Shirt ($20)</option>
+                            <option value="Smart Fitness Watch|75">Smart Fitness Watch ($75)</option>
+                            <option value="Water Flask 1L|15">Water Flask 1L ($15)</option>
+                            <option value="Ergonomic Mouse|30">Ergonomic Mouse ($30)</option>
+                            <option value="Laptop Backpack|50">Waterproof Laptop Backpack ($50)</option>
+                        </select>
+                        <span id="wishItemErr" class="error-msg">Please select an item.</span>
+                    </div>
+
+                    <div class="form-group flex-1">
+                        <label for="wishQuantity">Quantity: <span class="required">*</span></label>
+                        <input type="number" id="wishQuantity" class="form-input" min="1" max="10" value="1">
+                        <span id="wishQtyErr" class="error-msg">Quantity must be 1 to 10.</span>
+                    </div>
+
+                    <div class="form-group flex-1">
+                        <label for="wishPriority">Priority: <span class="required">*</span></label>
+                        <select id="wishPriority" class="form-input">
+                            <option value="High">High</option>
+                            <option value="Medium" selected>Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group flex-btn">
+                        <button type="button" class="btn btn-primary" onclick="addWishlistItem()">+ Add Item</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wishlist Table and Budget Calculation Summary -->
+            <div class="two-column-grid">
+                <!-- Table View -->
+                <div class="card">
+                    <h3>My Saved Items</h3>
+                    <div class="table-responsive">
+                        <table class="custom-table" id="wishlistTable">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Unit Price</th>
+                                    <th>Qty</th>
+                                    <th>Priority</th>
+                                    <th>Subtotal</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="wishlistBody">
+                                <!-- Initial Item 1 -->
+                                <tr id="wishRow_1">
+                                    <td>Wireless Bluetooth Earbuds</td>
+                                    <td>$45.00</td>
+                                    <td>1</td>
+                                    <td><span class="badge badge-high">High</span></td>
+                                    <td class="row-total">$45.00</td>
+                                    <td><button class="btn-delete" onclick="removeWishlistItem('wishRow_1', 45.00)">Remove</button></td>
+                                </tr>
+                                <!-- Initial Item 2 -->
+                                <tr id="wishRow_2">
+                                    <td>Smart Fitness Watch</td>
+                                    <td>$75.00</td>
+                                    <td>1</td>
+                                    <td><span class="badge badge-med">Medium</span></td>
+                                    <td class="row-total">$75.00</td>
+                                    <td><button class="btn-delete" onclick="removeWishlistItem('wishRow_2', 75.00)">Remove</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p id="emptyWishlistNotice" style="display: none; text-align: center; color: #64748b; padding: 20px;">Your wishlist is currently empty. Add items above!</p>
+                </div>
+
+                <!-- Budget Calculator & Promo Code Card -->
+                <div class="card budget-card">
+                    <h3>Estimated Budget Calculator</h3>
+                    <div class="budget-breakdown">
+                        <div class="budget-row">
+                            <span>Items Subtotal:</span>
+                            <strong id="calcSubtotal">$120.00</strong>
+                        </div>
+                        <div class="budget-row">
+                            <span>Promo Discount:</span>
+                            <strong id="calcDiscount" class="text-green">-$0.00</strong>
+                        </div>
+                        <div class="budget-row">
+                            <span>Estimated Delivery:</span>
+                            <strong id="calcDelivery">$5.00</strong>
+                        </div>
+                        <hr class="divider">
+                        <div class="budget-row total-row">
+                            <span>Estimated Total:</span>
+                            <strong id="calcTotal">$125.00</strong>
+                        </div>
+                    </div>
+
+                    <!-- Coupon Code Section -->
+                    <div class="coupon-section">
+                        <label for="couponInput">Have a Coupon Code?</label>
+                        <div class="coupon-input-group">
+                            <input type="text" id="couponInput" class="form-input" placeholder="Try 'EAZY10' or 'FREESHIP'">
+                            <button type="button" class="btn btn-secondary" onclick="applyCoupon()">Apply</button>
+                        </div>
+                        <span id="couponMsg" class="coupon-msg"></span>
+                        <small class="coupon-hint">💡 Tip: Use <strong>EAZY10</strong> for 10% off or <strong>FREESHIP</strong> for free delivery.</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             FEATURE 4: Support Ticket & Return Request
+             ========================================== -->
+        <section id="support-section" class="feature-section" style="display: none;">
+            <div class="section-title">
+                <h2>Feature 4: Customer Support Ticket & Return Request</h2>
+                <p>Submit inquiries, report product issues, or request returns directly to the support team.</p>
+            </div>
+
+            <div class="two-column-grid">
+                <!-- Support Ticket Form with Validation -->
+                <div class="card form-card">
+                    <h3>Open a Support Ticket / Return Request</h3>
+                    <div id="supportAlert" class="alert-box success-alert" style="display: none;">
+                        Support ticket submitted successfully!
+                    </div>
+
+                    <form id="supportForm" novalidate>
+                        <!-- Order ID -->
+                        <div class="form-group">
+                            <label for="tickOrderId">Order ID Reference: <span class="required">*</span></label>
+                            <input type="text" id="tickOrderId" class="form-input" placeholder="e.g. ORD-1002">
+                            <span id="tickOrderIdErr" class="error-msg">Order ID must start with 'ORD-' followed by numbers (e.g. ORD-1002).</span>
+                        </div>
+
+                        <!-- Issue Category -->
+                        <div class="form-group">
+                            <label for="tickCategory">Issue Category: <span class="required">*</span></label>
+                            <select id="tickCategory" class="form-input">
+                                <option value="">-- Select Issue Type --</option>
+                                <option value="Damaged or Defective Item">Damaged or Defective Item</option>
+                                <option value="Wrong Item Received">Wrong Item Received</option>
+                                <option value="Package Not Delivered">Package Not Delivered</option>
+                                <option value="Payment or Billing Issue">Payment or Billing Issue</option>
+                                <option value="Return / Refund Request">Return / Refund Request</option>
+                            </select>
+                            <span id="tickCategoryErr" class="error-msg">Please select an issue category.</span>
+                        </div>
+
+                        <!-- Urgency Level -->
+                        <div class="form-group">
+                            <label>Urgency Level:</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="tickUrgency" value="Normal" checked> Normal</label>
+                                <label><input type="radio" name="tickUrgency" value="Urgent"> Urgent</label>
+                            </div>
+                        </div>
+
+                        <!-- Message Description -->
+                        <div class="form-group">
+                            <label for="tickDescription">Detailed Description: <span class="required">*</span></label>
+                            <textarea id="tickDescription" class="form-input" rows="4" placeholder="Explain the problem in detail so our support staff can help you quickly..."></textarea>
+                            <span id="tickDescErr" class="error-msg">Description must be at least 15 characters long.</span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit Ticket</button>
+                    </form>
+                </div>
+
+                <!-- Active Tickets History (DOM Manipulation) -->
+                <div class="card">
+                    <div class="feed-header">
+                        <h3>My Support History</h3>
+                        <span id="ticketCountBadge" class="badge">1 Active Ticket</span>
+                    </div>
+
+                    <div id="ticketsContainer" class="tickets-container">
+                        <!-- Initial Sample Ticket -->
+                        <div class="ticket-card" id="demoTicket1">
+                            <div class="ticket-header">
+                                <span class="ticket-id">Ticket #TCK-301</span>
+                                <span class="badge badge-pending" id="status_demoTicket1">Under Review</span>
+                            </div>
+                            <div class="ticket-meta">
+                                <span><strong>Order:</strong> ORD-8472</span> |
+                                <span><strong>Category:</strong> Wrong Item Received</span> |
+                                <span><strong>Priority:</strong> Urgent</span>
+                            </div>
+                            <p class="ticket-desc">"I ordered a black cotton shirt in Size L, but received a white shirt in Size M. Requesting an exchange or return."</p>
+                            <div class="ticket-footer">
+                                <span class="ticket-date">Created: 15 Nov, 2026</span>
+                                <button type="button" class="btn-resolve" onclick="resolveTicket('demoTicket1')">Mark as Resolved</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2026 Online Marketplace E-Commerce Management System. Customer Portal Module.</p>
+        <p>Built with HTML5, CSS3, and JavaScript.</p>
+    </footer>
+
+    <!-- Linking external JS file (Code Separation) -->
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Online Marketplace</title>
+    <!-- Linking external CSS file (Code Separation) -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-body">
+
+    <!-- Auth Container -->
+    <div class="auth-container">
+        
+        <!-- Brand Header -->
+        <div class="auth-header">
+            <div class="auth-logo">🛒 Online Marketplace</div>
+            <p class="auth-subtitle">New Customer Registration</p>
+        </div>
+
+        <!-- Signup Card -->
+        <div class="card auth-card">
+            <h2>Join Online Marketplace </h2>
+            <p class="auth-instruction">Fill out your details to create your customer account and start shopping.</p>
+
+            <!-- Success Alert Box -->
+            <div id="signupAlert" class="alert-box success-alert" style="display: none;"></div>
+
+            <!-- Signup Form -->
+            <form id="signupForm" novalidate>
+
+                <!-- Full Name -->
+                <div class="form-group">
+                    <label for="signupName">Full Name: <span class="required">*</span></label>
+                    <input type="text" id="signupName" class="form-input" placeholder="e.g. Mehedi Hasan">
+                    <span id="signupNameErr" class="error-msg">Name must be at least 3 letters (alphabets and spaces only).</span>
+                </div>
+
+                <!-- Email Address -->
+                <div class="form-group">
+                    <label for="signupEmail">Email Address: <span class="required">*</span></label>
+                    <input type="email" id="signupEmail" class="form-input" placeholder="e.g. mehedi@example.com">
+                    <span id="signupEmailErr" class="error-msg">Please enter a valid email containing '@' and '.'</span>
+                </div>
+
+                <!-- Phone Number -->
+                <div class="form-group">
+                    <label for="signupPhone">Phone Number: <span class="required">*</span></label>
+                    <input type="text" id="signupPhone" class="form-input" placeholder="e.g. 01864967296">
+                    <span id="signupPhoneErr" class="error-msg">Phone number must be exactly 11 digits and start with '01'.</span>
+                </div>
+
+                <!-- Password with Show/Hide toggle -->
+                <div class="form-group">
+                    <label for="signupPassword">Password: <span class="required">*</span></label>
+                    <div class="password-wrapper">
+                        <input type="password" id="signupPassword" class="form-input" placeholder="At least 6 characters" oninput="checkPasswordStrength()">
+                        <button type="button" class="btn-toggle-pw" onclick="togglePasswordVisibility('signupPassword', this)">Show</button>
+                    </div>
+                    <span id="signupPasswordErr" class="error-msg">Password must be at least 6 characters and include at least 1 number.</span>
+                    
+                    <!-- Live Password Strength Meter (DOM Manipulation) -->
+                    <div class="strength-meter-box">
+                        <div class="strength-bar-bg">
+                            <div id="strengthBar" class="strength-bar-fill"></div>
+                        </div>
+                        <span id="strengthText" class="strength-text">Password strength: None</span>
+                    </div>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="form-group">
+                    <label for="signupConfirmPassword">Confirm Password: <span class="required">*</span></label>
+                    <div class="password-wrapper">
+                        <input type="password" id="signupConfirmPassword" class="form-input" placeholder="Re-enter your password">
+                        <button type="button" class="btn-toggle-pw" onclick="togglePasswordVisibility('signupConfirmPassword', this)">Show</button>
+                    </div>
+                    <span id="signupConfirmErr" class="error-msg">Passwords do not match.</span>
+                </div>
+
+                <!-- Terms and Conditions Checkbox -->
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="signupTerms">
+                        I agree to the <a href="#" class="auth-link" onclick="viewTerms(event)">Terms & Conditions</a> and Privacy Policy
+                    </label>
+                    <span id="signupTermsErr" class="error-msg">You must accept the terms to register.</span>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary btn-block">Complete Registration</button>
+            </form>
+
+            <!-- Switch to Login Link -->
+            <div class="auth-footer">
+                <p>Already have an account? <a href="login.html" class="auth-link-bold">Sign In here</a></p>
+            </div>
+        </div>
+
+        <!-- Simple Footer -->
+        <footer class="auth-page-footer">
+            <p>© 2026 Online Marketplace E-Commerce Management System. Customer Portal.</p>
+        </footer>
+
+    </div>
+
+    <!-- Linking external JS file (Code Separation) -->
+    <script src="js/auth.js"></script>
+</body>
+</html>
